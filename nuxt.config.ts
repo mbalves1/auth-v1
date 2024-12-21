@@ -5,8 +5,12 @@ export default defineNuxtConfig({
   modules: [
     '@nuxtjs/tailwindcss',
     '@nuxtjs/supabase',
-    'nuxt-lucide-icons'
+    'nuxt-lucide-icons',
+    '@pinia/nuxt'
   ],
+  pinia: {
+    storesDirs: ['./stores/**', './custom-folder/stores/**'],
+  },
   supabase: {
     redirect: false,
     redirectOptions: {

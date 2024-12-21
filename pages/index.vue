@@ -26,10 +26,12 @@
                   <input type="password" name="password" id="password" placeholder="••••••••••" class="pl-12 mb-2 bg-gray-50 text-gray-600 border focus:border-transparent border-gray-300 sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 rounded-l-lg py-3 px-4" autocomplete="new-password" v-model="password">
               </div>
               <div class="flex justify-end text-red-500 text-sm">{{ errorMsg }}</div>
+              <div class="flex justify-end items-center text-gray-500 underline text-sm space-x-2 font-bold pointer" @click="goToRecoveryPage">Forgot password
+                <LucideArrowRight class="h-3 w-3 pointer"></LucideArrowRight>
+              </div>
           </div>
           <button type="submit" class="w-full text-[#FFFFFF] bg-[#4F46E5] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6">Login</button>
           <div class="text-sm font-light text-[#6B7280] ">Don't have an accout yet? <a href="/register" class="font-medium text-[#4F46E5] hover:underline">Sign Up</a>
-
           </div>
       </form>
       <!---->
@@ -58,5 +60,9 @@
     } catch (error) {
       errorMsg.value = error.message;
     }
+  }
+
+  function goToRecoveryPage() {
+    router.push('/reset-password');
   }
 </script>
