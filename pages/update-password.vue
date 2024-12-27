@@ -52,12 +52,8 @@
 
   const password = ref('');
   const passwordConfirm = ref('');
-  const errorMsg = ref('');
-
-  const user = useSupabaseUser();
-  console.log(' use', user);
+  const errorMsg = ref('');  
   
-
   function openPass (params) {
     console.log('chamou');
     if (params === 'confirm') {
@@ -66,25 +62,25 @@
       passwordType.value = !passwordType.value
     }
   }
-
+  
   async function updatePassword() {
-    console.log('envoi', password.value);
-    console.log('envoi', passwordConfirm.value);
+    const user = await useSupabaseUser();
+
     if (password.value !== passwordConfirm.value) {
       errorMsg.value = 'Password must be the same!'
     }
-    // try {
-    //   const { data, error } = await client.auth.updateUser({
-    //     email: "new@email.com",
-    //     password: password.value,
-    //     data: { hello: 'world' }
-    //   });
-    //   success.value = true;
-    //   setTimeout(() => {
-    //     router.push('/')
-    //   }, 5000)
-    // } catch (error) {
-    //   errorMsg.value = error.message;
-    // }
+    try {
+      const { data, error } = await client.auth.updateUser({
+        email: user.value.email,
+        password: password.value,
+        data: { hello: 'world' }
+      });
+      success.value = true;
+      setTimeout(() => {
+        router.push('/')
+      }, 5000)
+    } catch (error) {
+      errorMsg.value = error.message;
+    }
   }
 </script>
