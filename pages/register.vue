@@ -1,31 +1,77 @@
 <template>
-  <div class="h-screen flex justify-center items-center">
-    <div class="flex flex-col w-full md:w-1/2 xl:w-2/5 2xl:w-2/5 3xl:w-1/3 mx-auto p-8 md:p-10 2xl:p-12 3xl:p-14 bg-[#ffffff] rounded-2xl border-2">
+  <div class="h-screen flex justify-center items-center dark:bg-gray-900">
+    <div class="flex flex-col w-full md:w-1/2 xl:w-2/5 2xl:w-1/3 mx-auto p-8 md:p-10 2xl:p-12 3xl:p-14 bg-[#ffffff] rounded-2xl dark:bg-gray-800">
       <div class="flex flex-row gap-3 pb-4">
         <h1 class="text-3xl font-bold text-[#4B5563] my-auto">Your Company</h1>
       </div>
       <div class="text-sm font-light text-[#6B7280] pb-8 ">Register to your account on Your Company.</div>
       <!---->
       <form class="flex flex-col" @submit.prevent="signUp()">
+        <div class="sm:pb-2 md:flex md:space-x-2">
+          <div class="flex flex-col">
+            <Label forProps="firstName">First name</Label>
+            <div class="relative text-gray-400">
+              <span class="absolute inset-y-0 left-0 flex items-center p-1 pl-3">
+                <LucideMail />
+              </span> 
+              <Input
+                type="text"
+                id="firstName"
+                name="firstName"
+                placeholder="John"
+                v-model="formData.firstName"
+              />
+            </div>
+          </div>
+          <div class="flex flex-col">
+            <Label forProps="lastName">Last name</Label>
+            <div class="relative text-gray-400">
+              <span class="absolute inset-y-0 left-0 flex items-center p-1 pl-3">
+                <LucideMail />
+              </span> 
+              <Input
+                type="test"
+                id="lastName"
+                name="lastName"
+                placeholder="Doe"
+                v-model="formData.lastName"
+              />
+            </div>
+          </div>
+        </div>
         <div class="pb-2">
-          <label for="email" class="block mb-2 text-sm font-medium text-[#111827]">Email</label>
+          <Label forProps="email">Email</Label>
           <div class="relative text-gray-400">
           <span class="absolute inset-y-0 left-0 flex items-center p-1 pl-3">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail"><rect width="20" height="16" x="2" y="4" rx="2"></rect>
-              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-            </svg>
+            <LucideMail />
           </span> 
-          <input type="email" name="email" id="email" class="pl-12 mb-2 bg-gray-50 text-gray-600 border focus:border-transparent border-gray-300 sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 rounded-l-lg py-3 px-4" placeholder="name@company.com" autocomplete="off" v-model="email">
+          <Input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="name@company.com"
+            v-model="formData.email"
+          />
           </div>
         </div>
         <div class="pb-6">
-          <label for="password" class="block mb-2 text-sm font-medium text-[#111827]">Password</label>
+          <Label forProps="password">Password</Label>
           <div class="relative text-gray-400">
-            <span class="absolute inset-y-0 left-0 flex items-center p-1 pl-3">
+            <span class="absolute cursor-pointer inset-y-0 left-0 flex items-center p-1 pl-3">
+              <LucideSquareAsterisk />
+            </span>
+            <span class="absolute cursor-pointer inset-y-0 right-0 flex items-center p-1 pr-3">
               <LucideEye @click="openPass" v-if="passwordType"/>
               <LucideEyeOff @click="openPass" v-else/>
-            </span> 
-            <input :type="passwordType ? 'password' : 'text'" name="password" id="password" placeholder="••••••••••" class="pl-12 mb-2 bg-gray-50 text-gray-600 border focus:border-transparent border-gray-300 sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 rounded-l-lg py-3 px-4" autocomplete="new-password" v-model="password">
+            </span>
+
+            <Input
+              :type="passwordType ? 'password' : 'text'"
+              id="password"
+              name="password"
+              placeholder="••••••••••"
+              v-model="formData.password"
+            />
           </div>
           <div class="flex justify-end text-red-500 text-sm">{{ errorMsg }}</div>
           <div class="flex justify-end text-green-500 text-sm">{{  successMsg }}</div>
@@ -41,26 +87,33 @@
 </template>
 <script setup>
   const client = useSupabaseClient();
-  const email = ref(''); 
-  const password = ref('');
+  const formData = reactive({
+    email: '',
+    password: '',
+    firstName: '',
+    lastName: '',
+  });
+
   const errorMsg = ref('');
   const successMsg = ref('');
   const passwordType = ref(true);
 
   function openPass () {
-    console.log('chamou');
-    passwordType.value = !passwordType.value
-  }
+    passwordType.value = !passwordType.value;
+  };
 
   async function signUp() {
-    console.log('>> client', client);
-    
     try {
       const { data, error } = await client.auth.signUp({
-        email: email.value,
-        password: password.value,
+          email: formData.email,
+          password: formData.password,
+          options: {
+          data: {
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+          },
+        },
       });
-      console.log('data', data)
       if (error) throw error;
       successMsg.value = 'Check your email to confirm your account';
     } catch (error) {

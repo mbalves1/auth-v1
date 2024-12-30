@@ -6,7 +6,7 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@nuxtjs/supabase',
     'nuxt-lucide-icons',
-    '@pinia/nuxt'
+    '@pinia/nuxt',
   ],
   pinia: {
     storesDirs: ['./stores/**', './custom-folder/stores/**'],
@@ -17,5 +17,5 @@ export default defineNuxtConfig({
       login: '/login',
       callback: '/register',
     },
-  }
+  },
 })

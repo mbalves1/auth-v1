@@ -1,6 +1,6 @@
 <template>
-  <div class="h-screen flex justify-center items-center">
-    <div class="flex flex-col w-full md:w-1/2 xl:w-2/5 2xl:w-2/5 3xl:w-1/3 mx-auto p-8 md:p-10 2xl:p-12 3xl:p-14 bg-[#ffffff] rounded-2xl border-2">
+  <div class="h-screen flex justify-center items-center dark:bg-gray-900">
+    <div class="flex flex-col w-full md:w-1/2 xl:w-2/5 2xl:w-1/3 mx-auto p-8 md:p-10 2xl:p-12 3xl:p-14 bg-[#ffffff] rounded-2xl dark:bg-gray-800">
       <div class="flex flex-row gap-3 pb-4">
           <!---->
           <h1 class="text-3xl font-bold text-[#4B5563] my-auto">Your Company</h1>
@@ -12,7 +12,10 @@
         <div class="pb-1">
           <label for="password" class="block mb-2 text-sm font-medium text-[#111827]">Password</label>
             <div class="relative text-gray-400">
-              <span class="absolute inset-y-0 left-0 flex items-center p-1 pl-3">
+              <span class="absolute cursor-pointer inset-y-0 left-0 flex items-center p-1 pl-3">
+                <LucideSquareAsterisk />
+              </span>
+              <span class="absolute cursor-pointer inset-y-0 right-0 flex items-center p-1 pr-3">
                 <LucideEye @click="openPass" v-if="passwordType"/>
                 <LucideEyeOff @click="openPass" v-else/>
               </span>
@@ -24,9 +27,13 @@
               <label for="password" class="block mb-2 text-sm font-medium text-[#111827]">Confirm Password</label>
               <div class="relative text-gray-400">
                 <span class="absolute inset-y-0 left-0 flex items-center p-1 pl-3">
+                  <LucideSquareAsterisk />
+                </span>
+                <span class="absolute inset-y-0 right-0 flex items-center p-1 pr-3">
                   <LucideEye @click="openPass('confirm')" v-if="passwordTypeConfirm"/>
                   <LucideEyeOff @click="openPass('confirm')" v-else/>
-                </span> 
+                </span>
+
                 <input :type="passwordTypeConfirm ? 'password' : 'text'" name="password" id="password" placeholder="••••••••••" class="pl-12 mb-2 bg-gray-50 text-gray-600 border focus:border-transparent border-gray-300 sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 rounded-l-lg py-3 px-4" autocomplete="new-password" v-model="passwordConfirm">
               </div>
               <div class="flex justify-end text-red-500 text-sm">{{ errorMsg }}</div>
@@ -55,7 +62,6 @@
   const errorMsg = ref('');  
   
   function openPass (params) {
-    console.log('chamou');
     if (params === 'confirm') {
       passwordTypeConfirm.value = !passwordTypeConfirm.value
     } else {
