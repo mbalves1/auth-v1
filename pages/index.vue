@@ -1,12 +1,23 @@
 <template>
 	<div class="relative">
+		<div>
+			<UAlert
+				v-if="not"
+				icon="i-heroicons-command-line"
+				color="primary"
+				variant="solid"
+				title="Heads up!"
+				description="You can add components to your app using the cli."
+			/>
+		</div>
+
 		<div class="h-screen flex justify-center items-center dark:bg-gray-900">
 			<div
 				class="flex flex-col w-full md:w-1/2 xl:w-2/5 2xl:w-1/3 mx-auto p-8 md:p-10 2xl:p-12 3xl:p-14 bg-[#ffffff] rounded-2xl dark:bg-gray-800"
 			>
 				<div class="flex flex-row gap-3 pb-4">
 					<!---->
-					<h1 class="text-3xl font-bold text-[#4B5563] my-auto">
+					<h1 class="text-3xl font-bold text-primary my-auto">
 						Your Company
 					</h1>
 				</div>
@@ -67,7 +78,7 @@
 					</div>
 					<button
 						type="submit"
-						class="w-full text-[#FFFFFF] bg-[#4F46E5] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6"
+						class="w-full text-black bg-primary focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6"
 					>
 						Login >>>>>>
 					</button>
@@ -91,6 +102,7 @@
 	})
 
 	const notificationStore = useNotification()
+	const { showAlert } = useAlert();
 
 	const successMsg = ref({
     title: 'Login Attempt',
@@ -99,8 +111,19 @@
     colorBorder: 'border-blue-400'  // Exemplo de cor para a borda
   })
 
+	const triggerAlert = () => {
+		showAlert({
+			title: 'Erro no Login',
+			description: 'Credenciais inválidas, tente novamente.',
+			color: 'red',
+			icon: 'i-heroicons-exclamation-circle',
+		});
+	};
+
 	const client = useSupabaseClient();
 	const router = useRouter();
+
+	const not = ref(false)
 
 	const email = ref('');
 	const password = ref('');
@@ -120,14 +143,12 @@
 	}
 
 	async function signIn() {
-
-		notificationStore.sendNotification({
-			title: 'Login Attempt',
-			message: 'Você tentou logar com o email: ',
-			colorText: 'text-blue-700', // Exemplo de cor para o texto
-			colorBorder: 'border-blue-400', // Exemplo de cor para a borda
-			show: true,
-		})
+		showAlert({
+			title: 'Erro no Login',
+			description: 'Credenciais inválidas, tente novamente.',
+			color: 'red',
+			icon: 'i-heroicons-exclamation-circle',
+		});
 
 		// console.log('>> email.value', email.value);
 		// try {
