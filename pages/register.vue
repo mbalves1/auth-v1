@@ -6,13 +6,13 @@
       </div>
       <div class="text-sm font-light text-[#6B7280] pb-8 ">Register to your account on Your Company.</div>
       <!---->
-      <form class="flex flex-col" @submit.prevent="signUp()">
+      <form class="flex flex-col">
         <div class="sm:pb-2 md:flex md:space-x-2">
           <div class="flex flex-col">
             <Label forProps="firstName">First name</Label>
             <div class="relative text-gray-400">
               <span class="absolute inset-y-0 left-0 flex items-center p-1 pl-3">
-                <LucideMail />
+                <LucideUser />
               </span> 
               <Input
                 type="text"
@@ -76,7 +76,11 @@
           <div class="flex justify-end text-red-500 text-sm">{{ errorMsg }}</div>
           <div class="flex justify-end text-green-500 text-sm">{{  successMsg }}</div>
         </div>
-        <button type="submit" class="w-full text-[#FFFFFF] bg-[#4F46E5] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6">Register</button>
+        <button
+          type="submit"
+          class="w-full text-[#FFFFFF] bg-[#4F46E5] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6"
+          @click.prevent="signUp()"
+        >Register</button>
         <div class="text-sm font-light text-[#6B7280] ">Have an accout <a href="/" class="font-medium text-[#4F46E5] hover:underline">Logn In</a>
 
         </div>
@@ -87,7 +91,9 @@
 </template>
 <script setup>
   const client = useSupabaseClient();
-  const formData = reactive({
+  const { showAlert } = useAlert();
+
+  const formData = ref({
     email: '',
     password: '',
     firstName: '',
@@ -103,21 +109,34 @@
   };
 
   async function signUp() {
+    console.log('formData', formData.value);
+    
     try {
       const { data, error } = await client.auth.signUp({
-          email: formData.email,
-          password: formData.password,
-          options: {
+        email: formData.value.email,
+        password: formData.value.password,
+        options: {
           data: {
-            firstName: formData.firstName,
-            lastName: formData.lastName,
+            firstName: formData.value.firstName,
+            lastName: formData.value.lastName,
           },
         },
       });
       if (error) throw error;
+      showAlert({
+        title: 'Success, email send!',
+        description: 'Check your email to confirm your account.',
+        color: 'primary',
+        icon: 'i-heroicons-exclamation-circle',
+      });
       successMsg.value = 'Check your email to confirm your account';
     } catch (error) {
-      errorMsg.value = error.message
+      showAlert({
+        title: 'Error create account!',
+        description: 'Credenciais inválidas, tente novamente.',
+        color: 'red',
+        icon: 'i-heroicons-exclamation-circle',
+      });
     }
   }
 </script>

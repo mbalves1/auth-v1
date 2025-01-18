@@ -20,7 +20,7 @@ async function logout() {
     if (error) throw error;
     router.push("/");
   } catch (error) {
-    console.log(error.message);
+    console.error(error.message);
   }
 }
 </script>

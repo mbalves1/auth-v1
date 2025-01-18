@@ -10,7 +10,7 @@
       <!---->
       <form class="flex flex-col" @submit.prevent="sendEmailVerification()">
         <div class="pb-2">
-          <label for="email" class="block mb-2 text-sm font-medium text-[#111827]">Email</label>
+          <Label for="email">Email</Label>
           <div class="relative text-gray-400">
             <span class="absolute inset-y-0 left-0 flex items-center p-1 pl-3">
               <LucideMail />
@@ -22,8 +22,8 @@
           </div>
           <div>{{ errorMsg }}</div>
         </div>
-        <button type="submit" class="w-full text-[#FFFFFF] bg-[#4F46E5] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6">Login</button>
-        <div class="text-sm font-light text-[#6B7280] ">Don't have an accout yet? <a href="/register" class="font-medium text-[#4F46E5] hover:underline">Sign Up</a>
+        <button type="submit" class="w-full text-black bg-primary focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6">Login</button>
+        <div class="text-sm font-light text-[#6B7280] ">Don't have an accout yet? <a href="/register" class="font-medium text-primary hover:underline">Sign Up</a>
 
         </div>
       </form>

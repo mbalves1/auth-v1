@@ -1,16 +1,5 @@
 <template>
 	<div class="relative">
-		<div>
-			<UAlert
-				v-if="not"
-				icon="i-heroicons-command-line"
-				color="primary"
-				variant="solid"
-				title="Heads up!"
-				description="You can add components to your app using the cli."
-			/>
-		</div>
-
 		<div class="h-screen flex justify-center items-center dark:bg-gray-900">
 			<div
 				class="flex flex-col w-full md:w-1/2 xl:w-2/5 2xl:w-1/3 mx-auto p-8 md:p-10 2xl:p-12 3xl:p-14 bg-[#ffffff] rounded-2xl dark:bg-gray-800"
@@ -25,7 +14,7 @@
 					Login to your account on Your Company.
 				</div>
 				<!---->
-				<form class="flex flex-col" @submit.prevent="signIn()">
+				<form class="flex flex-col">
 					<div class="pb-2">
 						<Label forProps="email">Email</Label>
 						<div class="relative text-gray-400">
@@ -39,7 +28,7 @@
 								id="email"
 								name="email"
 								placeholder="name@company.com"
-								@value-input="handleInputEmail"
+								v-model="email"
 							/>
 						</div>
 					</div>
@@ -62,11 +51,8 @@
 								id="password"
 								name="password"
 								placeholder="••••••••••"
-								@value-input="handleInputPassword"
+								v-model="password"
 							/>
-						</div>
-						<div class="flex justify-end text-red-500 text-sm">
-							{{ errorMsg }}
 						</div>
 						<div
 							class="flex justify-end items-center text-gray-500 underline text-sm space-x-2 font-bold cursor-pointer"
@@ -76,17 +62,24 @@
 							<LucideArrowRight class="h-3 w-3"></LucideArrowRight>
 						</div>
 					</div>
-					<button
-						type="submit"
+					<!-- <button
 						class="w-full text-black bg-primary focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6"
+						:loading="loading"
+						@click.prevent="signIn()"
 					>
-						Login >>>>>>
-					</button>
+						Login
+					</button> -->
+
+					<Button
+						:loading="loading"
+						title="Login"
+						@clickCustom="signIn()"
+					></Button>
 					<div class="text-sm font-light text-[#6B7280]">
 						Don't have an accout yet?
 						<a
 							href="/register"
-							class="font-medium text-[#4F46E5] hover:underline"
+							class="font-medium text-primary hover:underline"
 							>Sign Up</a
 						>
 					</div>
@@ -101,67 +94,39 @@
 		layout: 'default'
 	})
 
-	const notificationStore = useNotification()
 	const { showAlert } = useAlert();
-
-	const successMsg = ref({
-    title: 'Login Attempt',
-    message: 'You tried to log in with email: ',
-    colorText: 'text-blue-700',  // Exemplo de cor para o texto
-    colorBorder: 'border-blue-400'  // Exemplo de cor para a borda
-  })
-
-	const triggerAlert = () => {
-		showAlert({
-			title: 'Erro no Login',
-			description: 'Credenciais inválidas, tente novamente.',
-			color: 'red',
-			icon: 'i-heroicons-exclamation-circle',
-		});
-	};
 
 	const client = useSupabaseClient();
 	const router = useRouter();
 
-	const not = ref(false)
-
 	const email = ref('');
 	const password = ref('');
 	const passwordType = ref(true);
-	const errorMsg = ref('');
+	const loading = ref(false);
 
 	function openPass() {
 		passwordType.value = !passwordType.value;
 	}
 
-	function handleInputEmail(event) {
-		email.value = event;
-	}
-
-	function handleInputPassword(event) {
-		password.value = event;
-	}
-
 	async function signIn() {
-		showAlert({
-			title: 'Erro no Login',
-			description: 'Credenciais inválidas, tente novamente.',
-			color: 'red',
-			icon: 'i-heroicons-exclamation-circle',
+		loading.value = true
+		const { data, error } = await client.auth.signInWithPassword({
+			email: email.value,
+			password: password.value,
 		});
-
-		// console.log('>> email.value', email.value);
-		// try {
-		// 	const { data, error } = await client.auth.signInWithPassword({
-		// 		email: email.value,
-		// 		password: password.value,
-		// 	});
-		// 	console.log('data', data);
-		// 	if (error) throw error;
-		// 	router.push('/profile');
-		// } catch (error) {
-		// 	errorMsg.value = error.message;
-		// }
+		console.log(data);
+		router.push('/profile');
+		if (error) {
+			loading.value = false
+			console.error(error);
+			showAlert({
+				title: 'Erro no Login',
+				description: 'Credenciais inválidas, tente novamente.',
+				color: 'red',
+				icon: 'i-lucide-octagon-x',
+			});
+			return;
+		}
 	}
 
 	function goToRecoveryPage() {

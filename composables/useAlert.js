@@ -18,7 +18,6 @@ export function useAlert() {
       color = 'primary',
       icon = 'i-heroicons-command-line'
     }) => {
-    console.log('showAlert chamado', { title, description, color, icon }); // Log do chamado
     alert.value = {
       visible: true,
       title,
@@ -26,7 +25,10 @@ export function useAlert() {
       color,
       icon,
     };
-    console.log('alert atualizado', alert.value); // Log do estado atualizado
+
+    setTimeout(() => {
+      alert.value.visible = false;
+    }, 5000)
   };
 
   const hideAlert = () => {
