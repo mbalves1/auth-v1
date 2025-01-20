@@ -11,13 +11,11 @@
           <div class="flex flex-col">
             <Label forProps="firstName">First name</Label>
             <div class="relative text-gray-400">
-              <span class="absolute inset-y-0 left-0 flex items-center p-1 pl-3">
-                <LucideUser />
-              </span> 
               <Input
                 type="text"
                 id="firstName"
                 name="firstName"
+                :has-icon-space="false"
                 placeholder="John"
                 v-model="formData.firstName"
               />
@@ -26,13 +24,11 @@
           <div class="flex flex-col">
             <Label forProps="lastName">Last name</Label>
             <div class="relative text-gray-400">
-              <span class="absolute inset-y-0 left-0 flex items-center p-1 pl-3">
-                <LucideMail />
-              </span> 
               <Input
                 type="test"
                 id="lastName"
                 name="lastName"
+                :has-icon-space="false"
                 placeholder="Doe"
                 v-model="formData.lastName"
               />
@@ -42,12 +38,10 @@
         <div class="pb-2">
           <Label forProps="email">Email</Label>
           <div class="relative text-gray-400">
-          <span class="absolute inset-y-0 left-0 flex items-center p-1 pl-3">
-            <LucideMail />
-          </span> 
           <Input
             type="email"
             id="email"
+            :has-icon-space="false"
             name="email"
             placeholder="name@company.com"
             v-model="formData.email"
@@ -57,9 +51,6 @@
         <div class="pb-6">
           <Label forProps="password">Password</Label>
           <div class="relative text-gray-400">
-            <span class="absolute cursor-pointer inset-y-0 left-0 flex items-center p-1 pl-3">
-              <LucideSquareAsterisk />
-            </span>
             <span class="absolute cursor-pointer inset-y-0 right-0 flex items-center p-1 pr-3">
               <LucideEye @click="openPass" v-if="passwordType"/>
               <LucideEyeOff @click="openPass" v-else/>
@@ -67,6 +58,7 @@
 
             <Input
               :type="passwordType ? 'password' : 'text'"
+              :has-icon-space="false"
               id="password"
               name="password"
               placeholder="••••••••••"
@@ -78,10 +70,10 @@
         </div>
         <button
           type="submit"
-          class="w-full text-[#FFFFFF] bg-[#4F46E5] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6"
+          class="w-full text-black bg-primary focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6"
           @click.prevent="signUp()"
         >Register</button>
-        <div class="text-sm font-light text-[#6B7280] ">Have an accout <a href="/" class="font-medium text-[#4F46E5] hover:underline">Logn In</a>
+        <div class="text-sm font-light text-[#6B7280] ">Have an accout <a href="/" class="font-medium text-primary hover:underline">Logn In</a>
 
         </div>
       </form>

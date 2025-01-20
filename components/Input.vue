@@ -4,7 +4,8 @@
       :name="name"
       :id="id"
       :placeholder="placeholder"
-      class="pl-12 mb-2 bg-gray-800 text-gray-400 border focus:border-transparent border-gray-700 sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 rounded-l-lg py-3 px-4" 
+      class="mb-2 bg-gray-800 text-gray-400 border focus:border-transparent border-gray-700 sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 rounded-l-lg py-3 px-4"
+      :class="hasIconSpace ? 'pl-12' : 'pl-4'"
       autocomplete="off"
       @input="$emit('update:modelValue', $event.target.value)"
     >
@@ -25,6 +26,10 @@ const props = defineProps({
   },
   valueInput: {
     type: String
+  },
+  hasIconSpace: {
+    type: Boolean,
+    default: true
   }
 })
 
