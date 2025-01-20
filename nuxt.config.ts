@@ -21,4 +21,10 @@ export default defineNuxtConfig({
       callback: '/register',
     },
   },
+  components: {
+    dirs: [
+      '~/components', // Diretório padrão
+      { path: '~/components/molecule', prefix: 'Molecule' }, // Diretório "molecules" com prefixo opcional
+    ],
+  },
 })
