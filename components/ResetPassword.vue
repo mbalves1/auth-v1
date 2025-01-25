@@ -1,7 +1,7 @@
 <template>
   <div>
       <!---->
-    <form class="flex flex-col" @submit.prevent="sendEmailVerification()">
+    <form class="flex flex-col">
       <div class="pb-2">
         <Label for="email">Email</Label>
         <div class="relative text-gray-400">
@@ -29,7 +29,11 @@
         <LucideArrowLeft class="h-3 w-3"></LucideArrowLeft>
         back to login page
       </div>
-      <button type="submit" class="w-full text-black bg-primary focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6">Send email</button>
+      <Button
+        title="Send email"
+        :loading="loading"
+        @clickCustom="sendEmailVerification()"
+      ></Button>
       <div
         class="text-sm font-light text-[#6B7280]"
       >Don't have an accout yet? <a href="/register" class="font-medium text-primary hover:underline">Sign Up</a>
@@ -44,18 +48,28 @@
   const client = useSupabaseClient();
   const router = useRouter();
   const success = ref(false);
+	const loading = ref(false);
 
   const email = ref('');
   const errorMsg = ref('');
 
   async function sendEmailVerification() {
+    loading.value = true;
     let { data, error } = await client.auth.resetPasswordForEmail(email.value);
     success.value = true;
+    loading.value = false;
     setTimeout(() => {
       router.push('/')
     }, 3000)
     if (error) {
+      loading.value = false;
       errorMsg.value = error.message;
+      showAlert({
+				title: 'Error',
+				description: 'Erro na validacao do email, tente novamente.',
+				color: 'red',
+				icon: 'i-lucide-octagon-x',
+			});
     }
   }
 

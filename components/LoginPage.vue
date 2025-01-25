@@ -81,10 +81,11 @@
 
 		if (error) {
 			showAlert({
-				title: 'Erro no Login',
+				title: 'Erro no login',
 				description: 'Credenciais inválidas, tente novamente.',
 				color: 'red',
 				icon: 'i-lucide-octagon-x',
+				time: 7000
 			});
 			loading.value = false;
 		}

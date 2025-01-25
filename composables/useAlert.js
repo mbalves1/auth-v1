@@ -16,7 +16,8 @@ export function useAlert() {
       title,
       description,
       color = 'primary',
-      icon = 'i-heroicons-command-line'
+      icon = 'i-heroicons-command-line',
+      time = 7000
     }) => {
     alert.value = {
       visible: true,
@@ -28,7 +29,7 @@ export function useAlert() {
 
     setTimeout(() => {
       alert.value.visible = false;
-    }, 5000)
+    }, time)
   };
 
   const hideAlert = () => {

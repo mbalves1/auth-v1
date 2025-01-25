@@ -8,7 +8,7 @@
       <!---->
       <form class="flex flex-col">
         <div class="sm:pb-2 md:flex md:space-x-2">
-          <div class="flex flex-col">
+          <div class="flex flex-col w-full">
             <Label forProps="firstName">First name</Label>
             <div class="relative text-gray-400">
               <Input
@@ -21,7 +21,7 @@
               />
             </div>
           </div>
-          <div class="flex flex-col">
+          <div class="flex flex-col w-full">
             <Label forProps="lastName">Last name</Label>
             <div class="relative text-gray-400">
               <Input
@@ -68,11 +68,11 @@
           <div class="flex justify-end text-red-500 text-sm">{{ errorMsg }}</div>
           <div class="flex justify-end text-green-500 text-sm">{{  successMsg }}</div>
         </div>
-        <button
-          type="submit"
-          class="w-full text-black bg-primary focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6"
-          @click.prevent="signUp()"
-        >Register</button>
+        <Button
+          :loading="loading"
+          title="Register"
+          @clickCustom="signUp()"  
+        ></Button>
         <div class="text-sm font-light text-[#6B7280] ">Have an accout <a href="/" class="font-medium text-primary hover:underline">Logn In</a>
 
         </div>
@@ -95,6 +95,7 @@
   const errorMsg = ref('');
   const successMsg = ref('');
   const passwordType = ref(true);
+  const loading = ref(false);
 
   function openPass () {
     passwordType.value = !passwordType.value;
@@ -102,7 +103,7 @@
 
   async function signUp() {
     console.log('formData', formData.value);
-    
+    loading.value = true;
     try {
       const { data, error } = await client.auth.signUp({
         email: formData.value.email,
@@ -114,15 +115,25 @@
           },
         },
       });
-      if (error) throw error;
+      if (error) {
+        loading.value = false;
+        showAlert({
+          title: 'Error create account!',
+          description: 'Credenciais inválidas, tente novamente.',
+          color: 'red',
+          icon: 'i-heroicons-exclamation-circle',
+        });
+      };
       showAlert({
         title: 'Success, email send!',
         description: 'Check your email to confirm your account.',
         color: 'primary',
         icon: 'i-heroicons-exclamation-circle',
       });
+      loading.value = false;
       successMsg.value = 'Check your email to confirm your account';
     } catch (error) {
+      loading.value = false;
       showAlert({
         title: 'Error create account!',
         description: 'Credenciais inválidas, tente novamente.',
