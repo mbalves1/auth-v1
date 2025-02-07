@@ -90,7 +90,7 @@
 			loading.value = false;
 		}
 		console.log(data);
-		router.push('/profile');
+		router.push('/home');
 	}
 
   const goToRecoveryPage = () => {
