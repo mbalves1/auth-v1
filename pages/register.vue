@@ -82,6 +82,11 @@
 </div>
 </template>
 <script setup>
+  definePageMeta({
+		layout: 'loginTemplate',
+	});
+
+
   const client = useSupabaseClient();
   const { showAlert } = useAlert();
 
