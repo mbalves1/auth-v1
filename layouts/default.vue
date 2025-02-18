@@ -13,7 +13,7 @@
         </template>
       </UAlert>
     </div>
-    <div class="flex justify-between">
+    <div class="flex flex-col sm:flex-row justify-between">
       <div>
         <div
           class="rounded-r-[10px] z-40 h-screen pt-4 overflow-y-auto transition-all duration-300 ease-in-out w-20 dark:bg-gray-900 flex flex-col items-center justify-between"
@@ -26,8 +26,8 @@
       <div>
         <slot />
       </div>
-      <div class="bg-yellow-300 sm:w-1/4">
-        Calendar here!
+      <div class="dark:bg-gray-900 sm:w-1/4 p-1">
+        <Calendar />
       </div>
     </div>
   </div>
