@@ -30,7 +30,7 @@
 
 <script setup>
 	definePageMeta({
-		layout: 'loginTemplate',
+		layout: 'login',
 	});
 
 	const loginPage = ref(true);

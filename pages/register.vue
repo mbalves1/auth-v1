@@ -83,9 +83,8 @@
 </template>
 <script setup>
   definePageMeta({
-		layout: 'loginTemplate',
+		layout: 'login',
 	});
-
 
   const client = useSupabaseClient();
   const { showAlert } = useAlert();
@@ -135,6 +134,7 @@
         color: 'primary',
         icon: 'i-heroicons-exclamation-circle',
       });
+      
       loading.value = false;
       successMsg.value = 'Check your email to confirm your account';
     } catch (error) {
