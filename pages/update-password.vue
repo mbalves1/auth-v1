@@ -96,7 +96,7 @@
 </template>
 <script setup>
 	definePageMeta({
-		layout: 'loginTemplate',
+		layout: 'login',
 	});
 
 	const client = useSupabaseClient();

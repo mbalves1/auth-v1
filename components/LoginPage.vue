@@ -60,6 +60,8 @@
   const emit = defineEmits(['goToRecoveryPassword']);
   const { showAlert } = useAlert();
 
+	const userStore = useUserStore();
+
 	const client = useSupabaseClient();
 	const router = useRouter();
 
@@ -89,8 +91,32 @@
 			});
 			loading.value = false;
 		}
-		console.log(data);
+		console.log('aqui');
+	
+		await registerWithSupabaseInNest(data?.user)
+		console.log('aqui 1');
 		router.push('/home');
+	}
+
+	async function registerWithSupabaseInNest(user) {
+		const { email, id, user_metadata, birthday } = user;
+		console.log('aqui 2');
+
+		try {
+			await userStore.register({
+				id,
+				firstName: user_metadata.firstName,
+				email,
+				lastName: user_metadata.lastName,
+				birthday,
+				isActive: true
+			})
+
+		console.log('aqui 3');
+
+		} catch (error) {
+			router.push('/home');
+		}
 	}
 
   const goToRecoveryPage = () => {
