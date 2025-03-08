@@ -91,16 +91,22 @@
 			});
 			loading.value = false;
 		}
-		console.log('aqui');
+
+		const token = useCookie('auth_token', {
+			maxAge: 60 * 60 * 24 * 7, // Expira em 7 dias
+			secure: true, // Apenas HTTPS em produção
+			httpOnly: false, // Defina true se quiser impedir acesso no frontend
+			sameSite: 'strict'
+		});
+
+		token.value = data?.session?.access_token
 	
 		await registerWithSupabaseInNest(data?.user)
-		console.log('aqui 1');
 		router.push('/home');
 	}
 
 	async function registerWithSupabaseInNest(user) {
 		const { email, id, user_metadata, birthday } = user;
-		console.log('aqui 2');
 
 		try {
 			await userStore.register({
@@ -111,8 +117,6 @@
 				birthday,
 				isActive: true
 			})
-
-		console.log('aqui 3');
 
 		} catch (error) {
 			router.push('/home');

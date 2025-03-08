@@ -19,8 +19,10 @@
           class="rounded-r-[10px] z-40 h-screen pt-4 overflow-y-auto transition-all duration-300 ease-in-out w-20 dark:bg-gray-900 flex flex-col items-center justify-between"
           :class="{ 'w-[170px] ': openMenu }">
           <p @click="open" class="inline-block border rounded p-1 border-primary text-primary"><LucideWalletMinimal /></p>
-            <NavBar :open-menu="openMenu" />
-          <p class="h-[300px]"></p>
+          <NavBar :open-menu="openMenu" />
+          <div class="pb-4">
+            <button @click="signOut">logout</button>
+          </div>
         </div>
       </div>
       <div>
@@ -34,11 +36,20 @@
 </template>
 <script setup>
   const { alert, hideAlert } = useAlert();
+	const client = useSupabaseClient();
+	const router = useRouter();
 
   const openMenu = ref(true);
 
   function open() {
     return openMenu.value = !openMenu.value
+  }
+
+  async function signOut() {
+    await client.auth.signOut(); // Desloga do Supabase
+    const token = useCookie('auth_token');
+    token.value = null; // Remove o token do cookie
+    router.push('/');
   }
 
   
