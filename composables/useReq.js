@@ -2,7 +2,7 @@ import { API_URL } from "~/api/apiNext";
 
 export async function createUser(userData) {
   try {
-    const response = await fetch(API_URL, {
+    const response = await fetch(`${API_URL}users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

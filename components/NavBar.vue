@@ -8,6 +8,7 @@
         <LucideHouse v-if="nav.icon === 'LucideHouse'" size="18"></LucideHouse>
         <LucideLayoutDashboard v-if="nav.icon === 'LucideLayoutDashboard'" size="18"></LucideLayoutDashboard>
         <LucideSheet v-if="nav.icon === 'LucideSheet'" size="18"></LucideSheet>
+        <LucideGem v-if="nav.icon === 'LucideGem'" size="18"></LucideGem>
         <LucideArrowRightLeft v-if="nav.icon === 'LucideArrowRightLeft'" size="18"></LucideArrowRightLeft>
         <LucideUserRoundPen v-if="nav.icon === 'LucideUserRoundPen'" size="18"></LucideUserRoundPen>
         <transition name="fade">
@@ -30,8 +31,9 @@ const activeIndex = ref(0)
 const navs = ref([
   { name: 'Home', path: '/home', icon: 'LucideHouse' },
   { name: 'Dashboard', path: '/dashboard', icon: 'LucideLayoutDashboard' },
-  { name: 'Tabelas', path: '/tabelas', icon: 'LucideSheet' },
-  { name: 'Transações', path: '/transacoes', icon: 'LucideArrowRightLeft' },
+  { name: 'Tabelas', path: '/tables', icon: 'LucideSheet' },
+  { name: 'Investir', path: '/products', icon: 'LucideGem' },
+  { name: 'Transações', path: '/transactions', icon: 'LucideArrowRightLeft' },
   { name: 'Profile', path: '/profile', icon: 'LucideUserRoundPen' },
 ])
 
