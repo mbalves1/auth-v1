@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-800">
+  <div class="bg-gray-800 h-screen">
     <div class="absolute top-4 right-4 z-10 w-[500px]">
       <UAlert
         v-if="alert.visible"
@@ -13,8 +13,16 @@
         </template>
       </UAlert>
     </div>
-    <div class="flex flex-col sm:flex-row justify-between">
-      <div>
+    <div
+      class="flex flex-col sm:flex-row justify-between"
+      :class="{'flex flex-col-reverse h-screen justify-between': mobile}"
+    >
+      <div v-if="mobile" class="m-4 mb-4 flex items-center justify-center">
+        <div class="fixed bottom-4 bg-gray-900 p-2 rounded-lg flex">
+          <NavBarMobile />
+        </div>
+      </div>
+      <div v-if="!mobile">
         <div
           class="rounded-r-[10px] z-40 h-screen pt-4 overflow-y-auto transition-all duration-300 ease-in-out w-20 dark:bg-gray-900 flex flex-col items-center justify-between"
           :class="{ 'w-[170px] ': openMenu }">
@@ -25,7 +33,7 @@
           </div>
         </div>
       </div>
-      <div>
+      <div class="">
         <slot />
       </div>
       <div class="dark:bg-gray-900 sm:w-1/4 p-1">
@@ -36,6 +44,8 @@
 </template>
 <script setup>
   const { alert, hideAlert } = useAlert();
+  const { mobile } = useMobile();
+
 	const client = useSupabaseClient();
 	const router = useRouter();
 
