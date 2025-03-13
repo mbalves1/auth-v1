@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { createUser } from "~/composables/useReq";
+import { createUser } from "~/composables/useUser";
 
 export const useUserStore = defineStore("user", {
   state: () => ({

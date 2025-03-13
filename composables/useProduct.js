@@ -1,4 +1,4 @@
-import { API_URL } from "~/api/apiNext";
+import { API_URL } from "~/api/apiNest";
 
 export async function getProducts() {
   try {

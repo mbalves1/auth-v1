@@ -3,7 +3,7 @@
     <div>Products</div>
 
     <div class="flex space-x-5">
-      <button @click="fecthProducts" class="p-2 bg-green-200 text-black">
+      <button @click="fetchProducts" class="p-2 bg-green-200 text-black">
         Produtos
       </button>
       <button class="p-2 bg-green-200 text-black">
@@ -19,20 +19,20 @@
   </div>
 </template>
 <script setup>
-	const { getProducts, product } = useProductStore();
+  const store = useProductStore();
+  const { product } = storeToRefs(store);
 
-  const dataProducts = ref([])
+	const { getProducts } = useProductStore();
+
+  const dataProducts = computed(() => product.value);
 
   onMounted( async () => {
-    await fecthProducts()
+    await fetchProducts()
   })
 
-  async function fecthProducts() {
+  async function fetchProducts() {
     try {
       await getProducts()
-      
-      dataProducts.value = product
-      console.log('>>', product);
     } catch (error) {
       console.error(error);
     }
