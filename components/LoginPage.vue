@@ -144,12 +144,7 @@
     token.value = data.session?.access_token;
 
     // Registra o usuário no seu backend (NestJS) se necessário
-		loadingGoogle.value = true;
-		try {
-			await registerWithSupabaseInNest(session.user);
-		} catch (error) {
-			loadingGoogle.value = false;
-		}
+		await registerWithSupabaseInNest(session.user);
     router.push('/home');
 	}
 
