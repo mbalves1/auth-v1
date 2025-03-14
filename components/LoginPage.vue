@@ -118,6 +118,9 @@
 
     const { data: { session }, error } = await client.auth.signInWithOAuth({
 			provider: 'google',
+			options: {
+				redirectTo: `${window.location.origin}/home`,
+			},
     });
 
 		await useSupabaseUser();
