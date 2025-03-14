@@ -53,6 +53,24 @@
 					>Sign Up</a
 				>
 			</div>
+			<div class="flex items-center my-3">
+				<div class="flex-grow border-t border-gray-600"></div>
+				<span class="mx-4 text-gray-500 font-semibold text-sm">or</span>
+				<div class="flex-grow border-t border-gray-600"></div>
+			</div>
+			<button
+				:class="{'bg-gray-700': loadingGoogle}"
+				@click="signInWithGoogle()"
+				class="w-full focus:ring-4 border focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-6 flex text-center align-center justify-center space-x-4"
+			>
+				<div class="w-[20px]">
+					<img src="/public/g_icon.svg">
+				</div>
+				Google
+				<LucideLoaderCircle
+					v-if="loadingGoogle"
+					class="h-5 w-5 animate-spin"></LucideLoaderCircle>
+			</button>
 		</form>
 	</div>
 </template>
@@ -69,9 +87,70 @@
 	const password = ref('');
 	const passwordType = ref(true);
 	const loading = ref(false);
+	const loadingGoogle = ref(false);
+
+	onMounted(async () => {
+    const { data: { session }, error } = await client.auth.getSession();
+
+    if (session) {
+			console.log('Usuário autenticado:', session.user);
+			const token = useCookie('auth_token', {
+					maxAge: 60 * 60 * 24 * 7,
+					secure: true,
+					httpOnly: false,
+					sameSite: 'strict'
+			});
+
+			token.value = session.access_token;
+			await registerWithSupabaseInNest(session.user);
+			router.push('/home');
+    } else {
+			console.log('Usuário não autenticado');
+    }
+	});
 
 	function openPass() {
 		passwordType.value = !passwordType.value;
+	}
+
+	async function signInWithGoogle() {
+    loadingGoogle.value = true;
+
+    const { data: { session }, error } = await client.auth.signInWithOAuth({
+			provider: 'google',
+    });
+
+		await useSupabaseUser();
+
+    if (error) {
+			showAlert({
+				title: 'Erro no login com Google',
+				description: 'Ocorreu um erro ao tentar fazer login com o Google.',
+				color: 'red',
+				icon: 'i-lucide-octagon-x',
+				time: 7000
+			});
+			loadingGoogle.value = false;
+			return;
+    }
+
+    const token = useCookie('auth_token', {
+        maxAge: 60 * 60 * 24 * 7, // Expira em 7 dias
+        secure: true, // Apenas HTTPS em produção
+        httpOnly: false, // Defina true se quiser impedir acesso no frontend
+        sameSite: 'strict'
+    });
+
+    token.value = data.session?.access_token;
+
+    // Registra o usuário no seu backend (NestJS) se necessário
+		loadingGoogle.value = true;
+		try {
+			await registerWithSupabaseInNest(session.user);
+		} catch (error) {
+			loadingGoogle.value = false;
+		}
+    router.push('/home');
 	}
 
 	async function signIn() {
@@ -100,24 +179,32 @@
 		});
 
 		token.value = data?.session?.access_token
-	
+
 		await registerWithSupabaseInNest(data?.user)
 		router.push('/home');
 	}
 
 	async function registerWithSupabaseInNest(user) {
 		const { email, id, user_metadata, birthday } = user;
+		
+		let firstName = '';
+		let lastName = '';
+
+		if (user_metadata?.full_name) {
+			const nameParts = user_metadata.full_name.split(' ');
+			firstName = nameParts[0];
+			lastName = nameParts.slice(1).join(' ');
+		}
 
 		try {
 			await userStore.register({
 				id,
-				firstName: user_metadata.firstName,
+				firstName,
 				email,
-				lastName: user_metadata.lastName,
+				lastName,
 				birthday,
 				isActive: true
-			})
-
+			});
 		} catch (error) {
 			router.push('/home');
 		}
