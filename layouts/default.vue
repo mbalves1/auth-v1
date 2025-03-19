@@ -33,7 +33,7 @@
           </div>
         </div>
       </div>
-      <div class="">
+      <div class="w-full sm:w-3/4">
         <slot />
       </div>
       <div class="dark:bg-gray-900 sm:w-1/4 p-1">

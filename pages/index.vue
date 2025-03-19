@@ -2,7 +2,7 @@
 	<div class="relative">
 		<div class="h-screen flex justify-center items-center dark:bg-gray-900">
 			<div
-				class="flex flex-col w-full md:w-1/2 xl:w-2/5 2xl:w-1/3 mx-auto p-8 md:p-10 2xl:p-12 3xl:p-14 bg-[#ffffff] rounded-2xl dark:bg-gray-800"
+				class="flex flex-col w-full md:w-1/2 xl:w-2/5 2xl:w-1/3 mx-auto p-4 sm:p-8 md:p-10 2xl:p-12 3xl:p-14 bg-[#ffffff] rounded-2xl dark:bg-gray-800"
 			>
 				<div class="flex flex-row gap-3 pb-4">
 					<h1 class="text-3xl font-bold text-primary my-auto">
