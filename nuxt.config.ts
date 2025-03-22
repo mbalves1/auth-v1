@@ -24,6 +24,7 @@ export default defineNuxtConfig({
   components: {
     dirs: [
       '~/components', // Diretório padrão
+      'composables'
     ],
   },
 })
