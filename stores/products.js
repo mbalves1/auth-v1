@@ -1,9 +1,11 @@
 import { defineStore } from "pinia";
-import { getProducts } from "~/composables/useProduct";
+import { getProducts, getProductsFixedIncome, getProductsRealEstate } from "~/composables/useProduct";
 
 export const useProductStore = defineStore("product", {
   state: () => ({
     product: [], // Armazena os dados do usuário após o cadastro
+    fixedIncomeProducts: [], // Armazena os dados do usuário após o cadastro
+    realEstateProducts: [],
     error: null,
     loading: false,
   }),
@@ -14,12 +16,29 @@ export const useProductStore = defineStore("product", {
         const response = await getProducts();
         console.log(this.product);
         this.product = response;
-        console.log('this', this.product);
-        
         return response;
       } catch (error) {
         console.error('Error:', error);
       }
     },
+    async getFixedIncome() {
+      try {
+        const response = await getProductsFixedIncome();
+        this.fixedIncomeProducts = response
+        return response;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async getRealEstate() {
+      try {
+        const response = await getProductsRealEstate();
+        this.realEstateProducts = response
+        console.log('this', this.realEstateProducts);
+        return response;
+      } catch (error) {
+        console.error(error);
+      }
+    }
   },
 });

@@ -1,9 +1,9 @@
 export const useFormat = () => {
-  const formatText = (text) => {
-    if (text === 'hight') return 'Alto Risco';
-    if (text === 'medium') return 'Médio Risco';
-    if (text === 'low') return 'Baixo Risco';
-    return text;
+  const formatText = (type) => {
+    if (type === 'hight') return 'Alto Risco';
+    if (type === 'real_estate') return 'Médio Risco';
+    if (type === 'CDB') return 'Baixo Risco';
+    return type;
   };
 
   const formatCurrency = (value) => {

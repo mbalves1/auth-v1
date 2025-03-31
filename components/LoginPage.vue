@@ -123,6 +123,8 @@
 			},
     });
 
+		console.log('data:', data);
+		
 		await useSupabaseUser();
 
     if (error) {

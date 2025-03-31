@@ -7,40 +7,59 @@
       >
         <div class="flex flex-col justify-center items-center">
           <div class="flex flex-col justify-center items-center">
-            <p class="text-xl font-bold">{{ product.name }}</p>
-            <p class="text-sm text-gray-500 font-bold" :class="{'text-xl text-white': !product.name}">
+            <span class="text-xl font-bold" v-if="product.ticker">{{ product.ticker }}</span>
+            <p class="font-bold" :class="{'text-sm': product.ticker, 'text-xl': !product.ticker }">{{ product.name }}</p>
+            <p class="text-sm text-white font-bold" :class="{'text-xl text-white': !product.name}">
               <span>{{ product.bank }}</span>
-              <span> - {{ formatDate(product.dueDate) }}</span>
+              <span v-if="product.bank"> - {{ formatDate(product.maturityDate) }}</span>
             </p>
           </div>
           <span
             class="text-xs mt-2 border px-2 py-1 rounded-xl flex items-center space-x-1"
             :class="{
-              'text-red-300': product.risk === 'hight',
-              'text-yellow-200': product.risk === 'medium',
-              'text-gray-300': product.risk === 'low'
+              'text-red-300': product.type === 'hight',
+              'text-yellow-200': product.type === 'real_estate',
+              'text-gray-300': product.type === 'CDB'
             }"
           >
             <LucideChartNoAxesColumnIncreasing class="h-3 w-3"/>
-            <p class="text-xs">{{ formatText(product.risk) }}</p>
+            <p class="text-xs">{{ formatText(product.type) }}</p>
           </span>
         </div>
-        <div class="text-xs flex flex-col">
+        <div class="text-xs flex flex-col" v-if="type === 'fixed_income'">
           <div class="flex justify-between">
-            <p>Característica: </p>
+            <p class="text-gray-400">Característica: </p>
             <p>{{ formatType(product.rateType) }}</p>
           </div>
           <div class="flex justify-between">
-            <p>Taxa:</p>
-            <p>{{ product.rate }}%</p>
+            <p class="text-gray-400">Taxa:</p>
+            <p>{{ product.interestRate }}%</p>
           </div>
           <div class="flex justify-between">
-            <p>Investimento minimo: </p>
-            <p>{{ formatNumber(product.initialInvestment) }}</p>
+            <p class="text-gray-400">Investimento minimo: </p>
+            <p>{{ formatNumber(product.minimumInvestment) }}</p>
           </div>
           <div class="flex justify-between">
-            <p>Quantidade disponível: </p>
-            <p>{{ formatNumber(product.quantityRemaining) }}</p>
+            <p class="text-gray-400">Liquidez: </p>
+            <p>{{ product.liquidity }}</p>
+          </div>
+        </div>
+        <div class="text-xs flex flex-col" v-if="type === 'real_estate'">
+          <div class="flex justify-between">
+            <p class="text-gray-400">Categoria: </p>
+            <p>{{ product.category }}</p>
+          </div>
+          <div class="flex justify-between">
+            <p class="text-gray-400">Dividend Yield:</p>
+            <p>{{ product.dividendYield }}%</p>
+          </div>
+          <div class="flex justify-between">
+            <p class="text-gray-400">Último dividendo: </p>
+            <p>{{ formatNumber(product.lastDividend) }}</p>
+          </div>
+          <div class="flex justify-between">
+            <p class="text-gray-400">Patrimônio: </p>
+            <p>{{ formatCurrency(product.netWorth) }}</p>
           </div>
         </div>
         <div class="mx-auto">
@@ -53,6 +72,7 @@
 <script setup>
   defineProps({
     products: Array,
+    type: String
   })
   const emit = defineEmits(['handleClick'])
   const { formatText, formatCurrency, formatNumber, formatType, formatDate } = useFormat();
