@@ -1,0 +1,50 @@
+export const dataFixedIncome = [
+    {
+      "id":"4e3ec525-0730-49cc-95b8-27a27bf4b2c9",
+      "name":"CDB Banco Alfa",
+      "issuer":"Banco Alfa",
+      "type":"CDB",
+      "interestRate":13.8,
+      "interestType":"Prefixado",
+      "indexer":"CDI",
+      "maturityDate":"2028-09-15T00:00:00.000Z",
+      "liquidity":"No vencimento",
+      "minimumInvestment":10000,
+      "taxation":"IR",
+      "createdAt":"2025-03-28T19:19:39.731Z",
+      "updatedAt":"2025-03-28T19:19:39.731Z",
+      "userId":null
+    },
+    {
+      "id":"88fc024b-f71b-41e2-9bae-29209a2c8ffe",
+      "name":"CDB Banco XP",
+      "issuer":"Banco XP",
+      "type":"CDB",
+      "interestRate":12.5,
+      "interestType":"Prefixado",
+      "indexer":"CDI",
+      "maturityDate":"2027-06-30T00:00:00.000Z",
+      "liquidity":"No vencimento",
+      "minimumInvestment":5000,
+      "taxation":"IR",
+      "createdAt":"2025-03-31T20:19:56.401Z",
+      "updatedAt":"2025-03-31T20:19:56.401Z",
+      "userId":null
+    },
+    {
+      "id":"dc33840d-40d6-4fe9-8eb3-dd7118492b8e",
+      "name":"CDB Banco Inter",
+      "issuer":"Banco Inter",
+      "type":"CDB",
+      "interestRate":100,
+      "interestType":"Pós-fixado",
+      "indexer":"CDI",
+      "maturityDate":"2026-12-20T00:00:00.000Z",
+      "liquidity":"Diária",
+      "minimumInvestment":1000,
+      "taxation":"IR",
+      "createdAt":"2025-03-31T20:20:02.762Z",
+      "updatedAt":"2025-03-31T20:20:02.762Z",
+      "userId":null
+    }
+  ]

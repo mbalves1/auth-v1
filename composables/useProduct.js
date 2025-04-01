@@ -1,4 +1,7 @@
 import { API_URL } from "~/api/apiNest";
+import { dataFixedIncome } from "../mocks/dataFixedIncome.js" 
+
+const USE_MOCKS = true;
 
 export async function getProducts() {
   try {
@@ -22,6 +25,9 @@ export async function getProducts() {
 }
 
 export async function getProductsFixedIncome() {
+  if (USE_MOCKS) {
+    return dataFixedIncome;
+  }
   try {
     const response = await fetch(`${API_URL}products/finxed_income`, {
       method: "GET",
@@ -35,9 +41,10 @@ export async function getProductsFixedIncome() {
     }
 
     const data = await response.json();
+    
     return data;
   } catch (error) {
-    console.error("Erro na requisição:", error);
+    console.error("Erro na requisição, retornando mock:", error);
     throw error;
   }
 }
