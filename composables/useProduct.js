@@ -1,7 +1,7 @@
 import { API_URL } from "~/api/apiNest";
 import { dataFixedIncome } from "../mocks/dataFixedIncome.js" 
 
-const USE_MOCKS = true;
+const USE_MOCKS = false;
 
 export async function getProducts() {
   try {

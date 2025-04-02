@@ -30,72 +30,28 @@
           </span>
         </div>
         <div class="text-xs flex flex-col" v-if="type === 'fixed_income'">
-          <div class="flex justify-between">
-            <p class="text-gray-400">Característica: </p>
-            <p>{{ formatType(product.rateType) }}</p>
-          </div>
-          <div class="flex justify-between">
-            <p class="text-gray-400">Taxa:</p>
-            <p>{{ product.interestRate }}%</p>
-          </div>
-          <div class="flex justify-between">
-            <p class="text-gray-400">Investimento minimo: </p>
-            <p>{{ formatNumber(product.minimumInvestment) }}</p>
-          </div>
-          <div class="flex justify-between">
-            <p class="text-gray-400">Liquidez: </p>
-            <p>{{ product.liquidity }}</p>
-          </div>
+          <CardProductsContentFixedIncome
+            :product="product"
+          >
+          </CardProductsContentFixedIncome>
         </div>
         <div class="text-xs flex flex-col" v-if="type === 'real_estate'">
-          <div class="flex justify-between">
-            <p class="text-gray-400">Categoria: </p>
-            <p>{{ product.category }}</p>
-          </div>
-          <div class="flex justify-between">
-            <p class="text-gray-400">Dividend Yield:</p>
-            <p>{{ product.dividendYield }}%</p>
-          </div>
-          <div class="flex justify-between">
-            <p class="text-gray-400">Último dividendo: </p>
-            <p>{{ formatNumber(product.lastDividend) }}</p>
-          </div>
-          <div class="flex justify-between">
-            <p class="text-gray-400">Patrimônio: </p>
-            <p>{{ formatCurrency(product.netWorth) }}</p>
-          </div>
+          <CardProductsContentRealEstate
+            :product="product"
+          >
+          </CardProductsContentRealEstate>
         </div>
         <div class="text-xs flex flex-col" v-if="type === 'stocks'">
-          <div class="flex justify-between">
-            <p class="text-gray-400">Setor: </p>
-            <p>{{ product.sector }}</p>
-          </div>
-          <div class="flex justify-between">
-            <p class="text-gray-400">Dividend Yield:</p>
-            <p>{{ product.dividendYield }}%</p>
-          </div>
-          <div class="flex justify-between">
-            <p class="text-gray-400">Último Preço: </p>
-            <p>{{ formatCurrency(product.lastPrice) }}</p>
-          </div>
-          <div class="flex justify-between">
-            <p class="text-gray-400">MarketCap: </p>
-            <p>{{ formatNumber(product.marketCap) }}</p>
-          </div>
+          <CardProductsContentStocks
+            :product="product"
+          >
+          </CardProductsContentStocks>
         </div>
         <div class="text-xs flex flex-col" v-if="type === 'crypto'">
-          <div class="flex justify-between">
-            <p class="text-gray-400">Último Preço: </p>
-            <p>{{ formatCurrency(product.lastPrice) }}</p>
-          </div>
-          <div class="flex justify-between">
-            <p class="text-gray-400">Circulação:</p>
-            <p>{{ formatNumber(product.circulatingSupply) }}</p>
-          </div>
-          <div class="flex justify-between">
-            <p class="text-gray-400">MarketCap: </p>
-            <p>{{ formatNumber(product.marketCap) }}</p>
-          </div>
+          <CardProductsContentCrypto
+            :product="product"
+          >
+          </CardProductsContentCrypto>
         </div>
         <div class="mx-auto">
           <button class="text-sm text-black font-bold py-1 px-8 rounded-2xl bg-primary">Investir</button>
