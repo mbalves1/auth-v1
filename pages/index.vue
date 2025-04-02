@@ -44,7 +44,7 @@
 	}
 </script>
 
-<style scoped>
+<style>
 .slide-fade-enter-active,
 .slide-fade-leave-active {
 	transition: all 0.3s ease;

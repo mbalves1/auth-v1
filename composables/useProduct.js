@@ -69,3 +69,45 @@ export async function getProductsRealEstate() {
     throw error;
   }
 }
+
+export async function getProductsStocks() {
+  try {
+    const response = await fetch(`${API_URL}products/stocks`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Erro: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Erro na requisição:", error);
+    throw error;
+  }
+}
+
+export async function getProductsCrypto() {
+  try {
+    const response = await fetch(`${API_URL}products/crypto`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Erro: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Erro na requisição:", error);
+    throw error;
+  }
+}

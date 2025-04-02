@@ -8,7 +8,10 @@
         <div class="flex flex-col justify-center items-center">
           <div class="flex flex-col justify-center items-center">
             <span class="text-xl font-bold" v-if="product.ticker">{{ product.ticker }}</span>
-            <p class="font-bold" :class="{'text-sm': product.ticker, 'text-xl': !product.ticker }">{{ product.name }}</p>
+            <p v-if="product.symbol" class="font-bold text-xl">{{ product.symbol }}</p>
+            <p class="font-bold" :class="[
+              (product.ticker || product.symbol) ? 'text-sm' : 'text-xl'
+            ]">{{ product.name }}</p>
             <p class="text-sm text-white font-bold" :class="{'text-xl text-white': !product.name}">
               <span>{{ product.bank }}</span>
               <span v-if="product.bank"> - {{ formatDate(product.maturityDate) }}</span>
@@ -60,6 +63,38 @@
           <div class="flex justify-between">
             <p class="text-gray-400">Patrimônio: </p>
             <p>{{ formatCurrency(product.netWorth) }}</p>
+          </div>
+        </div>
+        <div class="text-xs flex flex-col" v-if="type === 'stocks'">
+          <div class="flex justify-between">
+            <p class="text-gray-400">Setor: </p>
+            <p>{{ product.sector }}</p>
+          </div>
+          <div class="flex justify-between">
+            <p class="text-gray-400">Dividend Yield:</p>
+            <p>{{ product.dividendYield }}%</p>
+          </div>
+          <div class="flex justify-between">
+            <p class="text-gray-400">Último Preço: </p>
+            <p>{{ formatCurrency(product.lastPrice) }}</p>
+          </div>
+          <div class="flex justify-between">
+            <p class="text-gray-400">MarketCap: </p>
+            <p>{{ formatNumber(product.marketCap) }}</p>
+          </div>
+        </div>
+        <div class="text-xs flex flex-col" v-if="type === 'crypto'">
+          <div class="flex justify-between">
+            <p class="text-gray-400">Último Preço: </p>
+            <p>{{ formatCurrency(product.lastPrice) }}</p>
+          </div>
+          <div class="flex justify-between">
+            <p class="text-gray-400">Circulação:</p>
+            <p>{{ formatNumber(product.circulatingSupply) }}</p>
+          </div>
+          <div class="flex justify-between">
+            <p class="text-gray-400">MarketCap: </p>
+            <p>{{ formatNumber(product.marketCap) }}</p>
           </div>
         </div>
         <div class="mx-auto">
