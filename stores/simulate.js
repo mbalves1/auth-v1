@@ -12,7 +12,6 @@ export const useSimulateStore = defineStore("simulate", {
     async getSimulateWallet(token) {
       try {
         const response = await getSimulate(token);
-        console.log(this.simulateWallet);
         this.simulateWallet = response;
         return response;
       } catch (error) {

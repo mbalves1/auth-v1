@@ -44,7 +44,6 @@ export const useProductStore = defineStore("product", {
       try {
         const response = await getProductsStocks();
         this.stocksProducts = response
-        console.log('this', this.stocksProducts);
         return response;
       } catch (error) {
         console.error(error);
@@ -54,7 +53,6 @@ export const useProductStore = defineStore("product", {
       try {
         const response = await getProductsCrypto();
         this.cryptProducts = response
-        console.log('this', this.cryptProducts);
         return response;
       } catch (error) {
         console.error(error);

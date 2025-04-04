@@ -20,7 +20,7 @@
 </template>
 <script setup>
   defineProps({
-    product: Array
+    product: Array || Object
   })
 
   const { formatText, formatCurrency, formatNumber, formatType, formatDate } = useFormat();

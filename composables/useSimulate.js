@@ -2,15 +2,14 @@ import { API_URL } from "~/api/apiNest";
 
 export async function getSimulate(token) {
   const cookies = JSON.stringify(token.value)
-  const toje = JSON.parse(cookies);
-  console.log('auth_token', toje);
+  const authToken = JSON.parse(cookies);
   
   try {
     const response = await fetch(`${API_URL}investments/products/simulate`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${toje}`
+        "Authorization": `Bearer ${authToken}`
       },
     });
 

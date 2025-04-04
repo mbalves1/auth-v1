@@ -62,7 +62,7 @@
 </template>
 <script setup>
   defineProps({
-    products: Array,
+    products: Array || Object,
     type: String
   })
   const emit = defineEmits(['handleClick'])
@@ -75,8 +75,6 @@
     scrollContainers.value = document.querySelectorAll('.scroll-container');
 
     scrollContainers.value.forEach((container) => {
-      console.log(scrollContainers.value);
-      
       container.addEventListener('wheel', (event) => {
         if (container.scrollWidth > container.clientWidth) {
           event.preventDefault();
