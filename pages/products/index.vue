@@ -36,40 +36,110 @@
 
       <div v-if="main">
         <!-- Line 1  -->
-        <h2 class="text-2xl font-bold text-primary-300 mt-10 mb-2">Renda Fixa</h2>
-        <CardProducts
-          class="scroll-container"
-          :products="dataFixedIncomeProducts"
-          type="fixed_income"
-          @handleClick="selectedProduct"
-        />
+        <div v-if="showData.includes('fixedIncomeOpen')">
+          <div class="flex items-center mt-10 space-x-1 sm:space-x-4">
+            <h2 class="text-2xl font-bold text-primary-300">Renda Fixa</h2>
+            <LucideTable
+              v-if="showData.length > 1"
+              size="14"
+              class="cursor-pointer"
+              @click="showProducts('fixedIncomeOpen')"
+            ></LucideTable>
+            <LucideCircleArrowLeft
+              v-else
+              size="14"
+              class="cursor-pointer"
+              @click="showAllProducts()"
+            ></LucideCircleArrowLeft>
+          </div>
+          <sub class="mb-2">Produtos de renda fixa</sub>
+
+          <CardProducts
+            class="scroll-container"
+            :products="dataFixedIncomeProducts"
+            type="fixed_income"
+            @handleClick="selectedProduct"
+          />
+        </div>
 
         <!-- Line 2  real_estate_funds -->
-        <h2 class="text-2xl font-bold text-primary-300 mt-10 mb-2">Fundos Imobiliários</h2>
-        <CardProducts
-          class="scroll-container"
-          :products="dataRealEstateProducts"
-          type="real_estate"
-          @handleClick="selectedProduct"
-        />
+        <div v-if="showData.includes('realEstateOpen')">
+          <div class="flex items-center mt-10 space-x-1 sm:space-x-4">
+            <h2 class="text-2xl font-bold text-primary-300">Fundos imobiliários</h2>
+            <LucideTable
+              v-if="showData.length > 1"
+              size="14"
+              class="cursor-pointer"
+              @click="showProducts('realEstateOpen')"
+            ></LucideTable>
+            <LucideCircleArrowLeft
+              v-else
+              size="14"
+              class="cursor-pointer"
+              @click="showAllProducts()"
+            ></LucideCircleArrowLeft>
+          </div>
+          <sub class="mb-2">Ofertas de Fundos imobiliários</sub>
+
+          <CardProducts
+            class="scroll-container"
+            :products="dataRealEstateProducts"
+            type="real_estate"
+            @handleClick="selectedProduct"
+          />
+        </div>
 
         <!-- Line 3 stocks -->
-        <h2 class="text-2xl font-bold text-primary-300 mt-10 mb-2">Ações</h2>
-        <CardProducts
-          class="scroll-container"
-          :products="dataStocksProducts"
-          type="stocks"
-          @handleClick="selectedProduct"
-        />
+        <div v-if="showData.includes('stocksOpen')">
+          <div class="flex items-center mt-10 space-x-1 sm:space-x-4">
+            <h2 class="text-2xl font-bold text-primary-300 mb-2">Ações</h2>
+            <LucideTable
+              v-if="showData.length > 1"
+              size="14"
+              class="cursor-pointer"
+              @click="showProducts('stocksOpen')"
+            ></LucideTable>
+            <LucideCircleArrowLeft
+              v-else
+              size="14"
+              class="cursor-pointer"
+              @click="showAllProducts()"
+            ></LucideCircleArrowLeft>
+          </div>
+
+          <CardProducts
+            class="scroll-container"
+            :products="dataStocksProducts"
+            type="stocks"
+            @handleClick="selectedProduct"
+          />
+        </div>
 
         <!-- Line 4 crypto -->
-        <h2 class="text-2xl font-bold text-primary-300 mt-10 mb-2">Crypto</h2>
-        <CardProducts
-          class="scroll-container"
-          :products="dataCryptProducts"
-          type="crypto"
-          @handleClick="selectedProduct"
-        />
+        <div v-if="showData.includes('cryptoOpen')">
+          <div class="flex items-center mt-10 space-x-1 sm:space-x-4">
+            <h2 class="text-2xl font-bold text-primary-300 mb-2">Crypto</h2>
+            <LucideTable
+              v-if="showData.length > 1"
+              size="14"
+              class="cursor-pointer"
+              @click="showProducts('cryptoOpen')"
+            ></LucideTable>
+            <LucideCircleArrowLeft
+              v-else
+              size="14"
+              class="cursor-pointer"
+              @click="showAllProducts()"
+            ></LucideCircleArrowLeft>
+          </div>
+
+          <CardProducts
+            class="scroll-container"
+            :products="dataCryptProducts"
+            type="crypto"
+            @handleClick="selectedProduct"
+          />
+        </div>
       </div>
 
       <div v-else class="mt-10">
@@ -189,6 +259,15 @@
   const main = ref(true)
   const token = ref(null)
   const fixedIncomeSimulate = ref(null)
+  const showData = ref(['fixedIncomeOpen', 'realEstateOpen', 'stocksOpen', 'cryptoOpen'])
+
+  const showProducts = (params) => {
+    showData.value = [params]
+  }
+
+  const showAllProducts = () => {
+    showData.value = ['fixedIncomeOpen', 'realEstateOpen', 'stocksOpen', 'cryptoOpen']
+  }
 
   const filterProductsByType = (type) => {
     return dataProducts.value.filter(({ investmentType }) => investmentType === type);
