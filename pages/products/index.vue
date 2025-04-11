@@ -59,6 +59,7 @@
             :products="dataFixedIncomeProducts"
             type="fixed_income"
             @handleClick="selectedProduct"
+            :tableView="showData.length === 1"
           />
         </div>
 
@@ -86,6 +87,7 @@
             :products="dataRealEstateProducts"
             type="real_estate"
             @handleClick="selectedProduct"
+            :tableView="showData.length === 1"
           />
         </div>
 
@@ -112,6 +114,7 @@
             :products="dataStocksProducts"
             type="stocks"
             @handleClick="selectedProduct"
+            :tableView="showData.length === 1"
           />
         </div>
 
@@ -138,6 +141,7 @@
             :products="dataCryptProducts"
             type="crypto"
             @handleClick="selectedProduct"
+            :tableView="showData.length === 1"
           />
         </div>
       </div>

@@ -1,5 +1,10 @@
 <template>
-  <div class="scroll-container flex overflow-auto scroll-smooth space-x-4 py-4">
+  <div
+    class="scroll-container flex overflow-auto scroll-smooth py-4"
+    :class="tableView 
+      ? 'flex flex-wrap gap-4' 
+      : 'flex space-x-2'"
+  >
     <div v-for="(product, dx) in products" :key="dx">
       <div
         class="border border-gray-700 bg-gray-800 hover:border-none hover:bg-gray-700 rounded w-[16em] h-[15em] hover:shadow-xl p-2 sm:p-4 flex flex-col justify-around"
@@ -85,7 +90,8 @@
 <script setup>
   defineProps({
     products: Array || Object,
-    type: String
+    type: String,
+    tableView: Boolean
   })
   const emit = defineEmits(['handleClick'])
   const { formatText, formatCurrency, formatNumber, formatType, formatDate } = useFormat();
