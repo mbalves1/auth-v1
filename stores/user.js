@@ -10,8 +10,6 @@ export const useUserStore = defineStore("user", {
 
   actions: {
     async register(userData) {
-      console.log("Chamou register");
-
       this.loading = true;
       this.error = null;
 

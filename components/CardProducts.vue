@@ -3,7 +3,6 @@
     <div v-for="(product, dx) in products" :key="dx">
       <div
         class="border border-gray-700 bg-gray-800 hover:border-none hover:bg-gray-700 rounded w-[16em] h-[15em] hover:shadow-xl p-2 sm:p-4 flex flex-col justify-around"
-        @click="handleEvent(product)"
       >
         <div class="flex flex-col justify-center items-center">
           <div class="flex flex-col justify-center items-center">
@@ -53,8 +52,31 @@
           >
           </CardProductsContentCrypto>
         </div>
+
+        <div v-if="type === 'fixed_income' && visibleInputIndex === dx" class="flex flex-col justify-center items-center my-2">
+          <input 
+            class="w-1/2 text-center bg-gray-500 rounded-lg" 
+            type="text" 
+            placeholder="R$ 0,00"
+            v-model="investmentAmounts[dx]"
+            @click.stop
+            @input="formatInputValue(dx)"
+          />
+            <!-- @input="formatInputValue(dx)" -->
+        </div>
+
         <div class="mx-auto">
-          <button class="text-sm text-black font-bold py-1 px-8 rounded-2xl bg-primary">Investir</button>
+          <button
+            v-if="type === 'fixed_income' && visibleInputIndex !== dx"
+            class="text-sm text-black font-bold py-1 px-8 rounded-2xl bg-primary"
+            @click.stop="toggleInput(dx)"
+          >Investir</button>
+
+          <button
+            v-else
+            class="text-sm text-black font-bold py-1 px-8 rounded-2xl bg-primary"
+            @click.stop="handleEvent(product, dx)"
+          >Enviar</button>
         </div>
       </div>
     </div>
@@ -69,6 +91,32 @@
   const { formatText, formatCurrency, formatNumber, formatType, formatDate } = useFormat();
   
   const scrollContainers = [ref(null), ref(null), ref(null)]; 
+  const visibleInputIndex = ref(null);
+  const investmentAmounts = reactive({});
+  const amount = reactive({});
+
+  // Função para formatar o valor como moeda
+  const formatInputValue = (index) => {
+    // Remove qualquer caractere que não seja número
+    let value = investmentAmounts[index].replace(/\D/g, '');
+    
+    // Se estiver vazio, não faz nada
+    if (!value) {
+      investmentAmounts[index] = '';
+      return;
+    }
+    
+    // Converte para número e divide por 100 para obter os centavos
+    const numValue = parseInt(value) / 100;
+    
+    // Formata como moeda (R$)
+    investmentAmounts[index] = `R$ ${numValue.toLocaleString('pt-BR', { 
+      minimumFractionDigits: 2, 
+      maximumFractionDigits: 2 
+    })}`;
+
+    amount.value = numValue;
+  };
 
   onMounted( async () => {
     await nextTick();
@@ -117,8 +165,23 @@
     });
   })
 
-  const handleEvent = (product) => {
-    emit('handleClick', product);
+  const handleEvent = (product, dx) => {
+    const object = {
+      product,
+      amount: amount.value
+    }
+
+    emit('handleClick', object);
   }
+
+  const toggleInput = (index) => {
+    // Se clicar no mesmo item novamente, fecha o input
+    if (visibleInputIndex.value === index) {
+      visibleInputIndex.value = null;
+    } else {
+      // Caso contrário, abre o input para este item
+      visibleInputIndex.value = index;
+    }
+  };
 
 </script>

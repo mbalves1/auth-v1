@@ -229,6 +229,7 @@
 <script setup>
   const storeProduct = useProductStore();
   const storeSimulate = useSimulateStore();
+  const storeInvestment = useInvestmentStore();
   const {
     product,
     fixedIncomeProducts,
@@ -237,6 +238,7 @@
     cryptProducts
   } = storeToRefs(storeProduct);
   const { simulateWallet } = storeToRefs(storeSimulate);
+  const { simpleInvestment } = storeToRefs(storeInvestment);
 
 	const {
     getProducts,
@@ -246,6 +248,8 @@
     getProductsCrypto
   } = useProductStore();
 	const { getSimulateWallet } = useSimulateStore();
+  const { createSimpleInvestment } = useInvestmentStore();
+
 
   const dataProducts = computed(() => product.value);
   const dataFixedIncomeProducts = computed(() => fixedIncomeProducts.value);
@@ -274,8 +278,6 @@
   };
 
   const getFixedIncomeTeste = (response) => {
-    console.log('response', response?.fixed_income?.offer);
-    
     fixedIncomeSimulate.value = response?.fixed_income?.offer;
     return fixedIncomeSimulate.value
   }
@@ -287,8 +289,16 @@
     token.value = useCookie('auth_token');
   })
 
-  const selectedProduct = (product) => {
-    console.log('Product clicked:', product);
+  const selectedProduct = async (item) => {
+    const payload = {
+      productId: item.product.id,
+      investedAmount: item.amount,
+    }
+    try {
+      const response = await createSimpleInvestment(token.value, payload);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   const formatDataSimulateWallet = () => {
@@ -299,7 +309,6 @@
     main.value = !main.value
     try {
       const wallet = await getSimulateWallet(token.value);
-      console.log('>>>>', wallet);
       getFixedIncomeTeste(wallet)
       return wallet
     } catch (error) {
