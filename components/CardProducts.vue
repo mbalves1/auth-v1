@@ -1,8 +1,8 @@
 <template>
   <div
     class="scroll-container flex overflow-auto scroll-smooth py-4"
-    :class="tableView 
-      ? 'flex flex-wrap gap-4' 
+    :class="tableView
+      ? 'flex flex-wrap gap-4'
       : 'flex space-x-2'"
   >
     <div v-for="(product, dx) in products" :key="dx">

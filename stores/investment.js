@@ -1,9 +1,10 @@
 import { defineStore } from "pinia";
-import { postSimpleInvestment } from "~/composables/useInvestments";
+import { postSimpleInvestment, getUserInvestment } from "~/composables/useInvestments";
 
 export const useInvestmentStore = defineStore("investment", {
   state: () => ({
     simpleInvestment: [],
+    userInvestments: [],
     error: null,
     loading: false,
   }),
@@ -13,6 +14,15 @@ export const useInvestmentStore = defineStore("investment", {
       try {
         const response = await postSimpleInvestment(token, data);
         this.simpleInvestment = response;
+        return response;
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    },
+    async getUserInvestment(token) {
+      try {
+        const response = await getUserInvestment(token);
+        this.userInvestments = response;
         return response;
       } catch (error) {
         console.error('Error:', error);
