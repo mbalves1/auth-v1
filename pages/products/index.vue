@@ -28,7 +28,9 @@
         </div>
       </div>
       <div class="mr-3">
-        <button class="w-[200px] bg-primary text-black font-bold p-3 rounded-lg" @click="simulate">Simular</button>
+        <button
+          :class="['w-[200px] text-black font-bold p-3 rounded-lg', main ? 'bg-primary hover:bg-primary-500' : 'bg-grey-500 text-white border hover:bg-gray-600']"
+          @click="simulate">{{ main ? 'Simular' : 'Voltar'}}</button>
       </div>
     </div>
 
