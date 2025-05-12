@@ -1,9 +1,16 @@
 <template>
   <div class="flex flex-col">
-    <header class="flex justify-between items-center bg-gray-800 text-white p-4 sm:w-[500px] mx-auto">
-      <h1>menu rapido</h1>
-      <div>item</div>
-      <div>Selecao</div>
+    <header class="flex flex-col items-start bg-gray-800 text-white p-4 sm:w-[500px]">
+      <div class="flex space-x-2">
+        <h1>menu rapido</h1>
+        <div>item</div>
+        <div>Selecao</div>
+
+      </div>
+      <div class="flex flex-col">
+        <div>Total: 1000</div>
+      </div>
+
     </header>
     <main class="flex flex-col sm:flex-row sm:space-x-2 space-y-2 sm:space-y-0 sm:m-5 items-center">
       <div v-for="(item, index) in dataUserInvestment" :key="index" class="flex">
@@ -26,6 +33,33 @@
         </div>
       </div>
     </main>
+    <div>
+      <div>
+        <LineChart
+          :data="data"
+          :categories="categories"
+          :height="300"
+          :xFormatter="xFormatter"
+          xLabel="Month"
+          yLabel="Amount"
+        />
+      </div>
+
+      <div>
+        <DonutChart
+          :data="DonutData.map((i) => i.value)"
+          :height="275"
+          :labels="DonutData"
+          :hide-legend="true"
+          :radius="0"
+        >
+          <div class="absolute text-center">
+            <div class="font-semibold">Label</div>
+            <div class="text-(--ui-text-muted)">2 seconds ago</div>
+          </div>
+        </DonutChart>
+      </div>
+    </div>
   </div>
 </template>
 <script setup>
@@ -93,4 +127,45 @@ function extractInvestmentInfo(item) {
   }
   return null;
 }
+
+// import { LineChart } from 'vue-chrts';
+
+const data = [
+  { month: 'Jan', sales: 100, profit: 50 },
+  { month: 'Feb', sales: 120, profit: 55 },
+  { month: 'Mar', sales: 180, profit: 80 },
+  { month: 'Apr', sales: 110, profit: 40 },
+  { month: 'May', sales: 90, profit: 30 },
+];
+
+const categories = {
+  sales: {
+    name: 'Sales',
+    color: '#3b82f6'
+  },
+  profit: {
+    name: 'Profit', 
+    color: '#10b981'
+  }
+};
+
+const xFormatter = (i) => data[i].month;
+
+const DonutData = [
+  {
+    color: '#60A5FA',
+    name: 'Blue',
+    value: 50,
+  },
+  {
+    color: '#CBD5E1',
+    name: 'Gray',
+    value: 20,
+  },
+  {
+    color: '#05df72',
+    name: 'Green',
+    value: 30,
+  },
+]
 </script>
