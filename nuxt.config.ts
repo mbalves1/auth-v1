@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     'nuxt-lucide-icons',
     '@pinia/nuxt',
     '@nuxt/ui',
+    "nuxt-charts"
   ],
   pinia: {
     storesDirs: ['./stores/**', './custom-folder/stores/**'],
