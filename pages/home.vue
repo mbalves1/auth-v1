@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col">
-    <header class="flex flex-col items-start bg-gray-800 text-white p-4 sm:w-[500px]">
+    <header class="flex flex-col border-b items-start bg-gray-800 text-white p-4 sm:w-[500px]">
       <div class="flex space-x-2">
         <h1>menu rapido</h1>
         <div>item</div>
@@ -34,7 +34,7 @@
       </div>
     </main>
     <div>
-      <div>
+      <!-- <div class="w-full">
         <LineChart
           :data="data"
           :categories="categories"
@@ -43,7 +43,7 @@
           xLabel="Month"
           yLabel="Amount"
         />
-      </div>
+      </div> -->
 
       <div>
         <DonutChart

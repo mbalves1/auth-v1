@@ -2,23 +2,7 @@
   <div class="h-screen overflow-y-auto p-4">
     <div class="flex sm:flex-row flex-col space-y-4 sm:space-y-0 sm:space-x-8 justify-between items-center mr-3 mt-5 sm:mt-0">
       <div class="flex overflow-x-auto">
-        <div class="bg-gray-900 px-6 py-2 ml-5 rounded-lg flex flex-col w-[150px]">
-          <div>
-            80% sd olsmd
-          </div>
-          <div>
-            saf sd sdfd
-          </div>
-        </div>
-        <div class="bg-gray-900 px-6 py-2 ml-5 rounded-lg flex flex-col">
-            <div>
-              80% sd olsmd
-            </div>
-          <div>
-            saf sd sdfd
-          </div>
-        </div>
-        <div class="bg-gray-900 px-6 py-2 ml-5 rounded-lg flex flex-col">
+        <div v-for="(item, index) in 3" :key="index" class="bg-gray-900 px-6 py-2 ml-5 rounded-lg flex flex-col w-[150px]">
           <div>
             80% sd olsmd
           </div>
