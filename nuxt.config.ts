@@ -22,6 +22,9 @@ export default defineNuxtConfig({
       callback: '/register',
     },
   },
+  plugins: [
+    '~/plugins/m-mask-lib.client.js'
+  ],
   components: {
     dirs: [
       '~/components', // Diretório padrão

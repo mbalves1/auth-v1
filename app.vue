@@ -5,3 +5,7 @@
     </NuxtLayout>
   </div>
 </template>
+<script setup>
+import 'm-mask-lib';
+</script>
+

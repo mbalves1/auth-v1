@@ -44,6 +44,7 @@
           yLabel="Amount"
         />
       </div> -->
+  </div>
 
       <div>
         <DonutChart
@@ -63,6 +64,7 @@
   </div>
 </template>
 <script setup>
+
 definePageMeta({
   middleware: ["auth"]
 });
@@ -137,6 +139,8 @@ const data = [
   { month: 'Apr', sales: 110, profit: 40 },
   { month: 'May', sales: 90, profit: 30 },
 ];
+
+const cpftest = ref();
 
 const categories = {
   sales: {
