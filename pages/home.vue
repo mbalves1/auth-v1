@@ -16,6 +16,7 @@
       <div v-for="(item, index) in dataUserInvestment" :key="index" class="flex">
         <div class="border border-gray-700 rounded p-5 w-[250px] ">
           <div class="flex justify-between items-center">
+            <!-- {{item}} -->
             <div>
               {{ extractInvestmentInfo(item).type }}
             </div>
@@ -45,11 +46,13 @@
         />
       </div> -->
   </div>
-
-      <div>
-        <DonutChart
+    <div class="flex flex-col gap-4 max-w-[700px] justify-center mx-auto">
+      <div class="flex gap-2 w-[700px]">
+        <div class="bg-white w-full rounded-lg">asw</div>
+        <div class="w-full">
+          <DonutChart
           :data="DonutData.map((i) => i.value)"
-          :height="275"
+          :height="200"
           :labels="DonutData"
           :hide-legend="true"
           :radius="0"
@@ -58,8 +61,9 @@
             <div class="font-semibold">Label</div>
             <div class="text-(--ui-text-muted)">2 seconds ago</div>
           </div>
-        </DonutChart>
+        </DonutChart></div>
       </div>
+      <div class="bg-white w-full rounded-lg h-40">ds</div>
     </div>
   </div>
 </template>
@@ -80,6 +84,8 @@ const { userInvestments } = storeToRefs(storeInvestment);
 const { getUserInvestment } = useInvestmentStore();
 
 const dataUserInvestment = computed(() => userInvestments.value);
+console.log('userInvestments', userInvestments.value);
+
 
 const token = ref(null)
 
