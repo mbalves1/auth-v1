@@ -12,7 +12,7 @@
       </div>
 
     </header>
-    <main class="flex flex-col sm:flex-row sm:space-x-2 space-y-2 sm:space-y-0 sm:m-5 items-center">
+    <div class="flex flex-col sm:flex-row sm:space-x-2 space-y-2 sm:space-y-0 sm:m-5 items-center">
       <div v-for="(item, index) in dataUserInvestment" :key="index" class="flex">
         <div class="border border-gray-700 rounded p-5 w-[250px] ">
           <div class="flex justify-between items-center">
@@ -33,7 +33,7 @@
 
         </div>
       </div>
-    </main>
+    </div>
     <div>
       <!-- <div class="w-full">
         <LineChart
@@ -46,14 +46,14 @@
         />
       </div> -->
   </div>
-    <div class="flex flex-col gap-4 max-w-[700px] justify-center mx-auto">
+    <div class="flex flex-col gap-4 justify-center mx-auto">
       <div class="flex gap-2 w-[700px]">
         <div class="bg-white w-full rounded-lg">asw</div>
         <div class="w-full">
           <DonutChart
           :data="DonutData.map((i) => i.value)"
           :height="200"
-          :labels="DonutData"
+          :labels="marketShareLabels"
           :hide-legend="true"
           :radius="0"
         >
@@ -63,7 +63,8 @@
           </div>
         </DonutChart></div>
       </div>
-      <div class="bg-white w-full rounded-lg h-40">ds</div>
+      <div class="bg-red-500 w-full rounded-lg h-40">ds</div>
+      <button class="bg-blue-400" @click="call">Call</button>
     </div>
   </div>
 </template>
@@ -84,8 +85,11 @@ const { userInvestments } = storeToRefs(storeInvestment);
 const { getUserInvestment } = useInvestmentStore();
 
 const dataUserInvestment = computed(() => userInvestments.value);
-console.log('userInvestments', userInvestments.value);
+// console.log('userInvestments', userInvestments.value);
 
+const rendaFixa = ref(0)
+const Fii = ref(0)
+const stock = ref(0)
 
 const token = ref(null)
 
@@ -104,11 +108,16 @@ async function logout() {
   }
 }
 
+async function call() {
+  await getUserInvestment(token.value);
+}
+
 // função de formatacao de valor
 function extractInvestmentInfo(item) {
-  console.log(item);
+  // console.log(item);
   
   if (item.RealEstateFund) {
+    Fii.value = item.investedAmount
     return {
       type: 'FII',
       name: item.RealEstateFund.name,
@@ -117,6 +126,9 @@ function extractInvestmentInfo(item) {
     }
   }
   if (item.FixedIncomeInvestment) {
+    rendaFixa.value = item.investedAmount
+    console.log('rendaFixa.value', rendaFixa.value);
+    
     return {
       type: 'Renda Fixa',
       name: item.FixedIncomeInvestment.name,
@@ -126,6 +138,7 @@ function extractInvestmentInfo(item) {
     }
   }
   if (item.Stock) {
+    stock.value = item.investedAmount
     return {
       type: 'Açao',
       name: item.Stock.name,
@@ -161,21 +174,27 @@ const categories = {
 
 const xFormatter = (i) => data[i].month;
 
-const DonutData = [
+const DonutData = computed(() => [
   {
     color: '#60A5FA',
-    name: 'Blue',
-    value: 50,
+    name: 'Renda Fixa',
+    value: rendaFixa.value,
   },
   {
     color: '#CBD5E1',
-    name: 'Gray',
-    value: 20,
+    name: 'FII',
+    value: Fii.value,
   },
   {
     color: '#05df72',
-    name: 'Green',
-    value: 30,
+    name: 'Stocks',
+    value: stock.value,
   },
+]);
+
+const marketShareLabels = [
+  { name: 'Product A', color: '#3b82f6' }, // Blue
+  { name: 'Product B', color: '#14b8a6' }, // Teal
+  { name: 'Product C', color: '#f59e0b' },
 ]
 </script>

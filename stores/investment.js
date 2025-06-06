@@ -22,6 +22,8 @@ export const useInvestmentStore = defineStore("investment", {
     async getUserInvestment(token) {
       try {
         const response = await getUserInvestment(token);
+        console.log('response', response);
+        
         this.userInvestments = response;
         return response;
       } catch (error) {

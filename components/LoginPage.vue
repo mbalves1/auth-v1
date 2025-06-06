@@ -123,7 +123,7 @@
 			},
     });
 
-		console.log('data:', data);
+		// console.log('data:', data);
 		
 		await useSupabaseUser();
 
