@@ -14,7 +14,8 @@ export const useUserStore = defineStore("user", {
       this.error = null;
 
       try {
-        this.user = await createUser(userData); // Chamada direta à função
+        const response = await createUser(userData); // Chamada direta à função
+        this.user = response; // Armazena os dados do usuário no estado
       } catch (error) {
         this.error = error.message;
       } finally {

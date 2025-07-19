@@ -19,7 +19,7 @@ export async function createUser(userData) {
       throw new Error(`Erro ao criar usuário: ${data.message}`);
     }
 
-    return data;
+    return JSON.parse(JSON.stringify(data));
   } catch (error) {
     console.error("Erro na requisição:", error.message);
     throw error;
